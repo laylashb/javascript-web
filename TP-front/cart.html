@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mon Petit Commerce – Panier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <!-- Header identique, onglet Panier mis en avant -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-20">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-slate-900 font-bold">M</span>
+        <span class="font-semibold tracking-tight">Mon Petit Commerce</span>
+      </a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="index.html" class="hover:text-emerald-400 transition-colors">Catalogue</a>
+        <a href="cart.html" class="text-emerald-400">Panier</a>
+        <a href="admin.html" class="hover:text-emerald-400 transition-colors">Admin</a>
+        <a href="auth.html" class="inline-flex items-center gap-1 rounded-full border border-slate-700 px-3 py-1 text-xs hover:border-emerald-500 hover:text-emerald-300 transition">
+          <span id="auth-label">Se connecter</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 grid gap-8 lg:grid-cols-[2fr,1.2fr]">
+    <!-- Panier -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-semibold">Mon panier</h1>
+        <button id="clear-cart"
+                class="text-xs text-slate-400 hover:text-rose-400 hover:underline">
+          Vider le panier
+        </button>
+      </div>
+
+      <div id="cart-empty" class="text-sm text-slate-500 py-8">
+        Votre panier est vide. Ajoutez des produits depuis le catalogue.
+      </div>
+
+      <ul id="cart-items" class="space-y-3 text-sm">
+        <!-- Lignes de panier générées en JS -->
+        <!-- Exemple visuel :
+        <li class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/40 px-3 py-2">
+          <div>
+            <p class="font-medium">T-shirt noir</p>
+            <p class="text-[11px] text-slate-500">19,99 € • Qté : 2</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="decrease inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-800 text-xs">-</button>
+            <button class="increase inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-800 text-xs">+</button>
+            <button class="remove text-[11px] text-rose-400 hover:underline">Retirer</button>
+          </div>
+        </li>
+        -->
+      </ul>
+    </section>
+
+    <!-- Récap commande -->
+    <aside class="space-y-4 rounded-2xl border border-slate-800 bg-slate-900/40 p-4 h-fit">
+      <h2 class="text-lg font-semibold">Récapitulatif</h2>
+
+      <div class="space-y-2 text-sm">
+        <div class="flex items-center justify-between">
+          <span class="text-slate-400">Sous-total</span>
+          <span id="cart-subtotal" class="font-medium">0,00 €</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-slate-400">Frais de livraison</span>
+          <span class="text-slate-500 text-xs">offerts</span>
+        </div>
+        <div class="border-t border-slate-800 pt-2 flex items-center justify-between">
+          <span class="font-semibold">Total</span>
+          <span id="cart-total" class="font-semibold text-emerald-400">0,00 €</span>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-xs text-slate-400">
+        <p>
+          Pour passer commande, vous devez être connecté. Le bouton sera activé automatiquement après authentification.
+        </p>
+        <button id="checkout-btn"
+                class="w-full inline-flex items-center justify-center rounded-full bg-emerald-500 px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                disabled>
+          Valider ma commande
+        </button>
+        <div id="checkout-message" class="min-h-[1.5rem] text-[11px]"></div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="border-t border-slate-800 mt-8">
+    <div class="mx-auto max-w-6xl px-4 py-4 text-xs text-slate-500 flex items-center justify-between">
+      <span>© Mon Petit Commerce</span>
+      <span>TP Express + MongoDB</span>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>

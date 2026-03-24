@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mon Petit Commerce – Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-20">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-slate-900 font-bold">M</span>
+        <span class="font-semibold tracking-tight">Mon Petit Commerce</span>
+      </a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="index.html" class="hover:text-emerald-400 transition-colors">Catalogue</a>
+        <a href="cart.html" class="hover:text-emerald-400 transition-colors">Panier</a>
+        <a href="admin.html" class="text-emerald-400">Admin</a>
+        <a href="auth.html" class="inline-flex items-center gap-1 rounded-full border border-slate-700 px-3 py-1 text-xs hover:border-emerald-500 hover:text-emerald-300 transition">
+          <span id="auth-label">Se connecter</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 space-y-6">
+    <section id="admin-guard" class="hidden rounded-xl border border-rose-500/40 bg-rose-950/20 p-4 text-sm">
+      <p class="font-semibold text-rose-300">Accès refusé</p>
+      <p class="text-slate-200 text-xs mt-1">
+        Cette page est réservée aux administrateurs. Connectez-vous avec un compte admin.
+      </p>
+    </section>
+
+    <section id="admin-content" class="space-y-8 hidden">
+      <!-- En-tête admin -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <h1 class="text-2xl font-semibold">Dashboard admin</h1>
+          <p class="text-sm text-slate-400">
+            Gérez le catalogue produits et suivez les commandes des clients.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-slate-400">
+          <span>Connecté en tant que <span id="admin-email" class="text-emerald-400">admin</span></span>
+          <button id="logout-btn"
+                  class="rounded-full border border-slate-700 px-3 py-1 hover:border-rose-400 hover:text-rose-300 transition">
+            Se déconnecter
+          </button>
+        </div>
+      </div>
+
+      <!-- Grille -->
+      <div class="grid gap-6 lg:grid-cols-[1.4fr,1.6fr]">
+        <!-- Gestion produits -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Produits</h2>
+            <span id="admin-products-count" class="text-xs text-slate-500">0 produit(s)</span>
+          </div>
+
+          <!-- Form produit -->
+          <form id="product-form" class="space-y-3 rounded-2xl border border-slate-800 bg-slate-900/40 p-4 text-sm">
+            <input type="hidden" id="product-id" />
+            <div class="grid gap-3 md:grid-cols-2">
+              <div class="space-y-1">
+                <label class="text-slate-300 text-xs" for="product-name">Nom</label>
+                <input id="product-name" type="text" required
+                       class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-slate-300 text-xs" for="product-price">Prix (€)</label>
+                <input id="product-price" type="number" min="0" step="0.01" required
+                       class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-slate-300 text-xs" for="product-stock">Stock</label>
+                <input id="product-stock" type="number" min="0" required
+                       class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-slate-300 text-xs" for="product-category">Catégorie</label>
+                <input id="product-category" type="text"
+                       class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500" />
+              </div>
+            </div>
+            <div class="space-y-1">
+              <label class="text-slate-300 text-xs" for="product-description">Description</label>
+              <textarea id="product-description" rows="2"
+                        class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500"></textarea>
+            </div>
+            <div class="space-y-1">
+              <label class="text-slate-300 text-xs" for="product-tags">Tags (séparés par des virgules)</label>
+              <input id="product-tags" type="text"
+                     class="w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500" />
+            </div>
+            <div class="flex items-center justify-between pt-1">
+              <button type="submit"
+                      class="inline-flex items-center rounded-full bg-emerald-500 px-4 py-1.5 text-[11px] font-semibold text-slate-950 hover:bg-emerald-400 transition">
+                <span id="product-submit-label">Créer le produit</span>
+              </button>
+              <button type="button" id="product-reset"
+                      class="text-[11px] text-slate-400 hover:text-slate-200 hover:underline">
+                Réinitialiser le formulaire
+              </button>
+            </div>
+            <div id="product-form-message" class="min-h-[1rem] text-[11px] text-slate-400"></div>
+          </form>
+
+          <!-- Liste produits -->
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-3 max-h-[320px] overflow-auto text-xs">
+            <table class="w-full border-collapse">
+              <thead class="text-slate-400 text-[11px] sticky top-0 bg-slate-900/90">
+                <tr>
+                  <th class="text-left py-1 pr-2 font-normal">Nom</th>
+                  <th class="text-left py-1 pr-2 font-normal">Prix</th>
+                  <th class="text-left py-1 pr-2 font-normal">Stock</th>
+                  <th class="text-left py-1 pr-2 font-normal">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-body">
+                <!-- Lignes générées en JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Commandes -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Commandes</h2>
+            <span id="admin-orders-count" class="text-xs text-slate-500">0 commande(s)</span>
+          </div>
+
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-3 max-h-[430px] overflow-auto text-xs">
+            <table class="w-full border-collapse">
+              <thead class="text-slate-400 text-[11px] sticky top-0 bg-slate-900/90">
+                <tr>
+                  <th class="text-left py-1 pr-2 font-normal">Client</th>
+                  <th class="text-left py-1 pr-2 font-normal">Total</th>
+                  <th class="text-left py-1 pr-2 font-normal">Statut</th>
+                  <th class="text-left py-1 pr-2 font-normal">Date</th>
+                  <th class="text-left py-1 pr-2 font-normal">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-body">
+                <!-- Lignes générées en JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800 mt-8">
+    <div class="mx-auto max-w-6xl px-4 py-4 text-xs text-slate-500 flex items-center justify-between">
+      <span>© Mon Petit Commerce</span>
+      <span>TP Express + MongoDB</span>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

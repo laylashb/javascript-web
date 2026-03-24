@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../TP-front"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "TP-front"
+	}
+}
